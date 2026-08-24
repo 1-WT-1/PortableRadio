@@ -15,9 +15,9 @@ Config.ConfigFilePath = nil
 
 Config.Debug = false
 Config.ToggleKey = "F5"
-Config.VolumeUpKey = "ADD"
-Config.VolumeDownKey = "SUBTRACT"
-Config.NextTrackKey = "None"
+Config.VolumeUpKey = "Add"
+Config.VolumeDownKey = "Subtract"
+Config.NextTrackKey = "F4"
 
 Config.EnableToggleSound = true
 Config.ToggleSoundVolume = 1.0
@@ -151,19 +151,53 @@ end
 
 function Config.ResolveFKey(keyStr)
     if not keyStr or keyStr == "" or keyStr:lower() == "none" or keyStr:lower() == "nil" then return nil end
+    local clean = keyStr:match("^%s*(.-)%s*$")
+    return { KeyName = FName(clean) }
+end
 
-    local clean = keyStr:gsub("[%s_]+", ""):upper()
-    local aliases = {
-        ["+"] = "Add", ["PLUS"] = "Add",
-        ["-"] = "Subtract", ["MINUS"] = "Subtract",
-        ["SPACE"] = "SpaceBar",
-        ["ESC"] = "Escape",
-        ["UPARROW"] = "Up", ["DOWNARROW"] = "Down",
-        ["LEFTARROW"] = "Left", ["RIGHTARROW"] = "Right",
+function Config.ParseKeybind(keyStr)
+    if not keyStr or keyStr == "" or keyStr:lower() == "none" or keyStr:lower() == "nil" then
+        return nil
+    end
+
+    local modStr = nil
+    local mainStr = keyStr
+
+    local trimmed = keyStr:match("^%s*(.-)%s*$")
+    if trimmed:find("+", 1, true) then
+        local parts = {}
+        for part in trimmed:gmatch("[^+]+") do
+            table.insert(parts, part:match("^%s*(.-)%s*$"))
+        end
+        if #parts >= 2 then
+            modStr = parts[1]
+            mainStr = parts[2]
+        end
+    end
+
+    local modType = nil
+    if modStr and modStr ~= "" and modStr:lower() ~= "none" and modStr:lower() ~= "nil" then
+        local cleanMod = modStr:gsub("[%s_]+", ""):upper()
+        if cleanMod == "SHIFT" then
+            modType = "SHIFT"
+        elseif cleanMod == "CTRL" or cleanMod == "CONTROL" then
+            modType = "CTRL"
+        elseif cleanMod == "ALT" then
+            modType = "ALT"
+        else
+            modType = Config.ResolveFKey(modStr)
+        end
+    end
+
+    local fkey = Config.ResolveFKey(mainStr)
+    if not fkey then return nil end
+
+    return {
+        Key = fkey,
+        Modifier = modType,
+        RawKey = mainStr,
+        RawModifier = modStr,
     }
-
-    local keyName = aliases[clean] or clean
-    return { KeyName = FName(keyName) }
 end
 
 return Config

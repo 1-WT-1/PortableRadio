@@ -14,16 +14,25 @@ Adds a portable radio to Project Silverfish.
 Change keybinds in `config.ini`:
 
 - **Toggle Radio**: `F5`
-- **Volume Up**: `+` (`ADD`)
-- **Volume Down**: `-` (`SUBTRACT`)
+- **Volume Up**: `Add` (Numpad `+`)
+- **Volume Down**: `Subtract` (Numpad `-`)
 - **Next Track**: `F4`
+
+### Modifiers
+
+You can combine any key with a modifier using `+` (e.g. `VolumeUpKey = LeftShift+Add`, `ToggleKey = LeftControl+F5`).
+Supported modifiers include `LeftShift`, `RightShift`, `LeftControl`, `RightControl`, `LeftAlt`, `RightAlt` (or generic `Shift`, `Ctrl`, `Alt`).
+
+On keyboards without a numpad, you can bind top-row keys (such as `Equals` and `Hyphen`) or combine them with modifiers.
+
+See the full list of Unreal Engine key names: <https://unrealcommunity.wiki/list-of-key/gamepad-input-names-j9c5mqou>.
 
 ## How to Use
 
 1. Start the game and load into a level.
 2. Press `F5` to turn the radio on or off.
 3. Press `F4` to skip to the next track.
-4. Press or hold `+` and `-` on the numpad to adjust volume.
+4. Press or hold `Add` and `Subtract` on the numpad to adjust volume (or your configured modifier combo, such as `LeftShift+Add`).
 
 ## Configuration
 
@@ -35,10 +44,10 @@ Edit `config.ini` to change settings:
 
 ### Keybinds
 
-- `ToggleKey`: Key to turn the radio on or off (e.g. `F5`).
-- `VolumeUpKey`: Key to increase volume (e.g. `ADD`).
-- `VolumeDownKey`: Key to decrease volume (e.g. `SUBTRACT`).
-- `NextTrackKey`: Key to skip to the next track (e.g. `F4`). Set to `None` to disable.
+- `ToggleKey`: Key to turn the radio on or off (e.g. `F5` or `LeftControl+F5`).
+- `VolumeUpKey`: Key to increase volume (e.g. `Add` or `LeftShift+Add`).
+- `VolumeDownKey`: Key to decrease volume (e.g. `Subtract` or `LeftShift+Subtract`).
+- `NextTrackKey`: Key to skip to the next track (e.g. `F4` or `LeftAlt+F4`). Set to `None` to disable.
 
 ### Audio
 
