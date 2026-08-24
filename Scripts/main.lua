@@ -2,7 +2,7 @@
 -- Portable radio with HUD, marquee track display, and audio routing.
 
 local ModName = "PortableRadio"
-local ModVersion = "1.0.0"
+local ModVersion = "1.1.0"
 print(string.format("[%s] v%s Initializing...", ModName, ModVersion))
 
 local _print = print
